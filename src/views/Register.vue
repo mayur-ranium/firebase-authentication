@@ -1,5 +1,5 @@
 <template>
- <div class="container mx-auto mt-16 w-3/12 text-left">
+ <div class="container mx-auto mt-16 lg:w-3/12 text-left px-6">
   
 <div class="bg-gray-100 shadow-sm rounded-md p-8">
     <h2 class="text-center text-2xl mb-10">Register User</h2>
@@ -13,8 +13,8 @@
     </div>
     <button type="submit" class="py-3 px-12 bg-red-400 mr-5 rounded-md text-white text-lg focus:outline-none w-full" @click="register">Register</button>
 </div>
-
 </div>
+  <div class="text-red-700 text-xl mt-10 text-center ">{{ errMsg }}</div>
 </template>
 
 <script>
@@ -25,6 +25,7 @@ export default{
         return{
             email : "",
             password : "",
+            errMsg: "",
         };
     },
     methods: {
@@ -34,13 +35,27 @@ export default{
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
+                    this.$router.push("/");
                     console.log(user)
                 })
                 .catch((error) => {
-                    console.log(error)
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                });
+                    console.log(error);
+                switch (error.code) {
+                case 'auth/invalid-email':
+                    this.errMsg = 'Invalid email'
+                    break
+                case 'auth/email-already-in-use':
+                   this.errMsg = 'Email already in use'
+                      break
+                case 'auth/weak-password':
+                   this.errMsg = 'Password should be at least 6 characters'
+                      break
+                default:
+                   this.errMsg = 'Please Ener password'
+                   break
+                }
+                 });
+
         }
     }
 }

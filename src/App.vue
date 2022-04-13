@@ -4,14 +4,43 @@
 <template>
 <div id="nav">
       <router-link to="/"> Home </router-link> |
-      <router-link to="/feed"> Feed </router-link> |
-      <router-link to="/register"> Register </router-link> |
-      <router-link to="/login"> Login </router-link> |
+     <span v-if="isLoggedIn"
+      >
+         <router-link to="/feed"> Feed </router-link> |
+        <span @click="signOut" class="font-bold cursor-pointer">Logout</span>
+      </span>
+      <span v-else>
+        <router-link to="/register"> Register </router-link> |
+        <router-link to="/login"> Login </router-link>
+      </span>
       
     </div>
  <router-view />
 </template>
+<script>
+  import { getAuth, signOut } from "firebase/auth";
 
+export default {
+  data(){
+    return{
+      isLoggedIn : true,
+    }
+  },
+  methods: {
+    signOut(){
+        const auth = getAuth();
+          console.log(auth);
+         signOut(auth).then(() => {
+            this.$router.push("/");
+            this.isLoggedIn = false;
+           console.log("sign out successful");
+         }).catch((error) => {
+        console.log(error); 
+     });
+    }
+  }
+}
+</script>
 <style>
 
 #app {

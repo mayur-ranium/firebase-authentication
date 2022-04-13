@@ -1,5 +1,5 @@
 <template>
-<div class="container mx-auto mt-16 w-3/12 text-left">
+<div class="container mx-auto mt-16 w-full lg:w-3/12 text-left px-6">
   
 <div class="bg-gray-100 shadow-sm rounded-md p-8">
     <h2 class="text-center text-2xl mb-10">Login</h2>
@@ -15,6 +15,7 @@
 </div>
 
 </div>
+     <div class="text-red-500 text-xl mt-5 text-center">{{ errMsg }}</div>
   </template>
 
 <script>
@@ -49,7 +50,7 @@ export default {
                    this.errMsg = 'Incorrect password'
                       break
                 default:
-                   this.errMsg = 'Email or password was incorrect'
+                   this.errMsg = 'Please Enter Your Password.'
                        break
                     }
                  });
