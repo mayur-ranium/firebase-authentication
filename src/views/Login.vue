@@ -15,7 +15,7 @@
 </div>
 
 </div>
-     <div class="text-red-500 text-xl mt-5 text-center">{{ errMsg }}</div>
+     <div class="text-red-500 text-xl mt-10 text-center">{{ errMsg }}</div>
   </template>
 
 <script>
