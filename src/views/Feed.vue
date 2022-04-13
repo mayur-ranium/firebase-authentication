@@ -1,7 +1,5 @@
 <template>
-<div>
-
-</div>
+<h1 class="text-red-500">feed</h1>
 
 
 </template>
