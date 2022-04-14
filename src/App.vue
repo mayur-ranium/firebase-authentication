@@ -2,42 +2,54 @@
 </script>
 
 <template>
-<div id="nav">
+<div id="nav"> 
+   <div>
       <router-link to="/"> Home </router-link> |
-     <span v-if="isLoggedIn"
-      >
-         <router-link to="/feed"> Feed </router-link> |
-        <span @click="signOut" class="font-bold cursor-pointer">Logout</span>
-      </span>
-      <span v-else>
+     <span v-if="!user.loggedIn">
         <router-link to="/register"> Register </router-link> |
         <router-link to="/login"> Login </router-link>
+     </span>
+     <span v-else>
+          <router-link to="/feed"> Feed </router-link> |
+      <span @click="signOut" class="font-bold cursor-pointer">Logout</span>
       </span>
-      
-    </div>
+   </div>
+   
+</div>
  <router-view />
 </template>
 <script>
-  import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
+import { mapGetters } from "vuex";
 
 export default {
   data(){
     return{
-      isLoggedIn : true,
+   
     }
   },
+  computed: {
+    // map `this.user` to `this.$store.getters.user`
+    ...mapGetters({
+      user: "user"
+    })
+  },
+ created(){
+   
+ },
   methods: {
     signOut(){
-        const auth = getAuth();
-          console.log(auth);
-         signOut(auth).then(() => {
-            this.$router.push("/");
-            this.isLoggedIn = false;
-           console.log("sign out successful");
-         }).catch((error) => {
-        console.log(error); 
-     });
+      const auth = getAuth();
+      signOut(auth).then(() => {
+        console.log(auth)
+        this.$router.push("/");
+        // Sign-out successful.
+      }).catch((error) => {
+        console.log(error);
+    // An error happened.
+      });
     }
+   
   }
 }
 </script>

@@ -35,6 +35,7 @@ export default {
             signInWithEmailAndPassword(auth, this.email, this.password)
                 .then((userCredential) => {
                     const user = userCredential.user;
+                    console.log(user);
                     console.log("user successfully loged in");
                     this.$router.push("/feed");
             })
