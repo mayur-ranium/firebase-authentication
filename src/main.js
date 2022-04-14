@@ -2,6 +2,10 @@ import { createApp } from "vue";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
 import App from "./App.vue";
 import router from "./Router/index";
 import store from './store'
