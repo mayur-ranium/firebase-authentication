@@ -1,6 +1,5 @@
 <template>
 <div class="container mx-auto mt-16 w-full lg:w-3/12 text-left px-6">
-  
 <div class="bg-gray-100 shadow-sm rounded-md p-8">
     <h2 class="text-center text-2xl mb-10">Login</h2>
     <div class="mb-6">
@@ -13,56 +12,61 @@
     </div>
     <button type="submit" class="py-3 px-12 bg-red-400 mr-5 rounded-md text-white text-lg focus:outline-none w-full" @click="login">Sign In</button>
 </div>
-
 </div>
      <div class="text-red-500 text-xl mt-10 text-center">{{ errMsg }}</div>
   </template>
 
 <script>
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
-export default {
-    name : "login",
-    data(){
-        return{
-         email : "",
-         password : "",
-         errMsg: "",
-        };
-    },
-    methods: {
-        login(){
-            const auth = getAuth();
-            signInWithEmailAndPassword(auth, this.email, this.password)
+import { ref } from "vue"
+import {getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { useRouter } from 'vue-router'
+
+export default({
+    name : "Login",
+    setup() {
+        const email = ref("");
+        const password = ref("");
+        const router = useRouter();
+        const errMsg = ref('');
+
+    const login = () => {
+      const auth = getAuth();
+            signInWithEmailAndPassword(auth, email.value, password.value)
                 .then((userCredential) => {
                     const user = userCredential.user;
                     console.log(user);
                     console.log("user successfully loged in");
-                    this.$router.push("/feed");
-            })
+                    router.push("/feed");
+                })
             .catch(error => {
                 switch (error.code) {
                     case 'auth/invalid-email':
-                    this.errMsg = 'Invalid email'
-                    break
-                case 'auth/user-not-found':
-                  this.errMsg = 'No account with that email was found'
-                     break
-                case 'auth/wrong-password':
-                   this.errMsg = 'Incorrect password'
-                      break
-                default:
-                   this.errMsg = 'Please Enter Your Password.'
-                       break
-                    }
-                 });
+                        errMsg.value = 'Invalid email'
+                        break
+                    case 'auth/user-not-found':
+                        errMsg.value = 'No account with that email was found'
+                        break
+                    case 'auth/wrong-password':
+                        errMsg.value = 'Incorrect password'
+                        break
+                    default:
+                   errMsg.value = 'Please Enter Your Password.'
+                        break
                 }
-    }
-}
-</script>
-<style >
-    .error-msg{
-        color: red;
-        font-size: 16px;
-    }
+            });
+        }
+        return{email, password, login, router, errMsg}
+    },
+})
+ 
 
-</style>
+
+
+   
+
+   
+</script>
+<script>
+
+
+</script>

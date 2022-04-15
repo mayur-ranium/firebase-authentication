@@ -2,26 +2,18 @@
 <h1 class="text-3xl">User Successfully Loged In</h1>
 <h1 class="text-3xl m-10">Welcome To My Todo APP {{ user.data.email }}</h1>
 
-
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { useStore } from "vuex"
 export default {
-    data(){
-        return{
-          
-        };
-    },
-    computed: {
-    // map `this.user` to `this.$store.getters.user`
-    ...mapGetters({
-      user: "user"
-    })
+  name : "Feed",
+  setup() {
+    const store = useStore();
+    const  user = store.getters.user;
+    console.log(user);
+    return{store, user};
   },
-     created(){
-     
-
-     }
 }
 </script>
+

@@ -1,8 +1,7 @@
 <template>
  <div class="container mx-auto mt-16 lg:w-3/12 text-left px-6">
-  
-<div class="bg-gray-100 shadow-sm rounded-md p-8">
-    <h2 class="text-center text-2xl mb-10">Register User</h2>
+    <div class="bg-gray-100 shadow-sm rounded-md p-8">
+     <h2 class="text-center text-2xl mb-10">Register User</h2>
     <div class="mb-6">
         <label for="email" class="mb-3 block text-gray-700">Email address:</label>
         <input type="email" id="email" class="bg-white rounded-md border border-gray-200 p-3 focus:outline-none w-full" placeholder="Email" v-model="email" required>
@@ -18,46 +17,59 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { useRouter } from "vue-router"
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth"
-export default{
-    name: "register",
-    data() {
-        return{
-            email : "",
-            password : "",
-            errMsg: "",
-        };
-    },
-    methods: {
-        register(){
-            const auth = getAuth();
-            createUserWithEmailAndPassword(auth, this.email, this.password)
-                .then((userCredential) => {
-                    // Signed in 
-                    const user = userCredential.user;
-                    this.$router.push("/");
-                    console.log(user)
-                })
-                .catch((error) => {
-                    console.log(error);
-                switch (error.code) {
-                case 'auth/invalid-email':
-                    this.errMsg = 'Invalid email'
-                    break
-                case 'auth/email-already-in-use':
-                   this.errMsg = 'Email already in use'
-                      break
-                case 'auth/weak-password':
-                   this.errMsg = 'Password should be at least 6 characters'
-                      break
-                default:
-                   this.errMsg = 'Please Ener password'
-                   break
-                }
-                 });
 
+export default({
+    name : "Register",
+    setup() {
+        const email = ref("");
+        const password = ref("");
+        const errMsg = ref("");
+        const Router = useRouter();
+        
+    const register = () => {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email.value, password.value)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        Router.push("/");
+        console.log(user);
+    })
+    .catch(error => {
+        console.log(error.message);
+        switch (error.code) {
+            case 'auth/invalid-email':
+                errMsg.value = 'Invalid email'
+            break
+            case 'auth/user-not-found':
+                errMsg.value = 'No account with that email was found'
+            break
+            case 'auth/wrong-password':
+                errMsg.value = 'Incorrect password'
+            break
+            case 'auth/email-already-in-use':
+                errMsg.value = 'Email Already in use try another.'
+            break
+            default:
+                errMsg.value = 'Please Enter Your Password.'
+            break
         }
-    }
+    })
 }
+         return {email, password, errMsg, Router, register}
+    },
+})
+</script>
+
+
+
+<script setup>
+
+
+
+
+
 
 </script>
