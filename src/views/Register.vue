@@ -39,16 +39,14 @@ export default({
         console.log(user);
     })
     .catch(error => {
+        console.log(error);
           let errorMessage = {
-                    'auth/invalid-email': "Invalid email",
-                    'auth/user-not-found': 'No account with that email was found',
-                    'auth/wrong-password': 'Incorrect password',
-                    'auth/MISSING_PASSWORD': "Password is Missing",
-                    'auth/INVALID_ARGUMENT': 'API key not valid. Please pass a valid API key.',
-                    'auth/EMAIL_EXISTS': 'Email already exists try another.',
-                    'default': 'Please Enter Your Password.'
+                 'auth/internal-error' : 'Password is Missing',
+                 'auth/invalid-email': "Invalid Email" ,
+                 'auth/weak-password': "Password should be at least 6 characters ",
+                 'auth/email-already-in-use': "Email Already in use Try Another",
                 }
-                console.log(errorMessage[error.code] || errorMessage['default']);
+                console.log(errorMessage[error.code]);
                 errorMsg.value = errorMessage[error.code];
             });
         }

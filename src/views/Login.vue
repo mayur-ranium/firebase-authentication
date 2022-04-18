@@ -40,13 +40,12 @@ export default({
                     router.push("/feed");
                 })
             .catch(error => {
+                console.log(error);
                 let errorMessage = {
                     'auth/invalid-email': "Invalid email",
-                    'auth/user-not-found': 'No account with that email was found',
                     'auth/wrong-password': 'Incorrect password',
-                    'auth/MISSING_PASSWORD': 'Password is missing',
-                    'auth/INVALID_ARGUMENT': 'API key not valid. Please pass a valid API key.',
-                    'default': 'Please Enter Your Password.'
+                    'auth/user-not-found': 'No account with that email was found',
+                    'auth/internal-error': 'Password is missing',
                 }
                 console.log(errorMessage[error.code]);
                 errorMsg.value = errorMessage[error.code];
