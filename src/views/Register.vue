@@ -13,7 +13,7 @@
     <button type="submit" class="py-3 px-12 bg-red-400 mr-5 rounded-md text-white text-lg focus:outline-none w-full" @click="register">Register</button>
 </div>
 </div>
-  <div class="text-red-700 text-xl mt-10 text-center ">{{ errMsg }}</div>
+  <div class="text-red-700 text-xl mt-10 text-center ">{{ errorMsg }}</div>
 </template>
 
 <script>
@@ -26,7 +26,8 @@ export default({
     setup() {
         const email = ref("");
         const password = ref("");
-        const errMsg = ref("");
+        const errorMsg = ref('');
+        const errorMessage = ref('');
         const Router = useRouter();
         
     const register = () => {
@@ -38,27 +39,20 @@ export default({
         console.log(user);
     })
     .catch(error => {
-        console.log(error.message);
-        switch (error.code) {
-            case 'auth/invalid-email':
-                errMsg.value = 'Invalid email'
-            break
-            case 'auth/user-not-found':
-                errMsg.value = 'No account with that email was found'
-            break
-            case 'auth/wrong-password':
-                errMsg.value = 'Incorrect password'
-            break
-            case 'auth/email-already-in-use':
-                errMsg.value = 'Email Already in use try another.'
-            break
-            default:
-                errMsg.value = 'Please Enter Your Password.'
-            break
+          let errorMessage = {
+                    'auth/invalid-email': "Invalid email",
+                    'auth/user-not-found': 'No account with that email was found',
+                    'auth/wrong-password': 'Incorrect password',
+                    'auth/MISSING_PASSWORD': "Password is Missing",
+                    'auth/INVALID_ARGUMENT': 'API key not valid. Please pass a valid API key.',
+                    'auth/EMAIL_EXISTS': 'Email already exists try another.',
+                    'default': 'Please Enter Your Password.'
+                }
+                console.log(errorMessage[error.code] || errorMessage['default']);
+                errorMsg.value = errorMessage[error.code];
+            });
         }
-    })
-}
-         return {email, password, errMsg, Router, register}
+         return {email, password, errorMsg, Router,errorMessage, register}
     },
 })
 </script>

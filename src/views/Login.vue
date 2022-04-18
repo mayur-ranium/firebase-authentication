@@ -13,7 +13,7 @@
     <button type="submit" class="py-3 px-12 bg-red-400 mr-5 rounded-md text-white text-lg focus:outline-none w-full" @click="login">Sign In</button>
 </div>
 </div>
-     <div class="text-red-500 text-xl mt-10 text-center">{{ errMsg }}</div>
+     <div class="text-red-500 text-xl mt-10 text-center">{{ errorMsg }}</div>
   </template>
 
 <script>
@@ -27,7 +27,8 @@ export default({
         const email = ref("");
         const password = ref("");
         const router = useRouter();
-        const errMsg = ref('');
+        const errorMessage = ref('');
+        const errorMsg = ref('');
 
     const login = () => {
       const auth = getAuth();
@@ -39,23 +40,19 @@ export default({
                     router.push("/feed");
                 })
             .catch(error => {
-                switch (error.code) {
-                    case 'auth/invalid-email':
-                        errMsg.value = 'Invalid email'
-                        break
-                    case 'auth/user-not-found':
-                        errMsg.value = 'No account with that email was found'
-                        break
-                    case 'auth/wrong-password':
-                        errMsg.value = 'Incorrect password'
-                        break
-                    default:
-                   errMsg.value = 'Please Enter Your Password.'
-                        break
+                let errorMessage = {
+                    'auth/invalid-email': "Invalid email",
+                    'auth/user-not-found': 'No account with that email was found',
+                    'auth/wrong-password': 'Incorrect password',
+                    'auth/MISSING_PASSWORD': 'Password is missing',
+                    'auth/INVALID_ARGUMENT': 'API key not valid. Please pass a valid API key.',
+                    'default': 'Please Enter Your Password.'
                 }
+                console.log(errorMessage[error.code]);
+                errorMsg.value = errorMessage[error.code];
             });
         }
-        return{email, password, login, router, errMsg}
+        return{email, password, login, router, errorMessage, errorMsg}
     },
 })
  
