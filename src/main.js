@@ -9,12 +9,12 @@ import store from './store'
 import './index.css';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBBCTyBXAmUnHraFAjclo_uYPC8lLUPIM4',
+  apiKey:import.meta.env.VITE_API_KEY,
   authDomain: 'login-user-authenticate.firebaseapp.com',
-  projectId: 'login-user-authenticate',
-  storageBucket: 'login-user-authenticate.appspot.com',
-  messagingSenderId: '558784634009',
-  appId: '1:558784634009:web:10cede62602bd89fd66c08'
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID
 };
   
 const firebase = initializeApp(firebaseConfig);

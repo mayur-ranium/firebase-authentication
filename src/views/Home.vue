@@ -3,6 +3,7 @@
         <h1 class="text-3xl">Welcome Home!!!</h1>
      
 
+       
 
 
     </div>
@@ -14,8 +15,7 @@ export default {
     name: "Home",
    data(){
        return{
-    
-           
+        
      
 
 
