@@ -1,16 +1,26 @@
 <template>
     <div>
-        <h1>Home</h1>
+        <h1 class="text-3xl">Welcome Home!!!</h1>
+     
+
+       
+
+
     </div>
 </template>
 
 
 <script>
 export default {
-    data(){
-        return{
+    name: "Home",
+   data(){
+       return{
+        
+     
 
-        };
-    }
+
+
+       }
+   }
 }
 </script>

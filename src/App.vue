@@ -1,20 +1,41 @@
+<template>
+<div id="nav"> 
+  <div>
+      <router-link to="/"> Home </router-link> |
+        <span v-if="!user.loggedIn">
+          <router-link to="/register"> Register </router-link> |
+        <router-link to="/login"> Login </router-link>
+     </span>
+        <span v-else>
+      <router-link to="/feed"> Feed </router-link> |
+         <span @click="Logout" class="font-bold cursor-pointer">Logout</span>
+        </span>
+   </div>
+</div>
+<router-view />
+</template>
+
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+import { ref } from "vue";
+import { useRouter } from "vue-router"
+import { useStore } from "vuex"
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth"
+
+const Router = useRouter();
+const loggedIn = ref(true);
+const store = useStore();
+
+const  user = store.getters.user;
+const Logout = () => {
+  const auth = getAuth();
+  auth.signOut()
+  Router.push('/')
+}
 
 </script>
 
-<template>
-<nav>
-      <router-link to="/"> Home </router-link> |
-      <router-link to="/feed"> Feed </router-link> |
-      <router-link to="/register"> Register </router-link> |
-      <router-link to="/sign-in"> Login </router-link> |
-    </nav>
- <router-view />
-</template>
-
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,5 +43,18 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#nav {
+    padding: 30px;
+}
+#nav a {
+    font-weight: bold;
+    color: #2c3e50;
+}
+#nav a.router-link-exact-active {
+    color: #42b983;
+}
+input {
+    margin-right: 20px;
 }
 </style>
