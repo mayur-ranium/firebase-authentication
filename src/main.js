@@ -13,13 +13,12 @@ import store from './store'
 import './index.css';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDB_G2vrCWeb-eP11maQc18vq7RpNurkpI",
-  authDomain: "vue-firebase-authenticat-b2307.firebaseapp.com",
-  projectId: "vue-firebase-authenticat-b2307",
-  storageBucket: "vue-firebase-authenticat-b2307.appspot.com",
-  messagingSenderId: "914290142566",
-  appId: "1:914290142566:web:0d6b1848bd082d4e846ca7",
-  measurementId: "G-G495868675"
+  apiKey:import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID
 };
   
 const firebase = initializeApp(firebaseConfig);

@@ -1,58 +1,39 @@
-<script setup>
-</script>
-
 <template>
 <div id="nav"> 
-   <div>
+  <div>
       <router-link to="/"> Home </router-link> |
-     <span v-if="!user.loggedIn">
-        <router-link to="/register"> Register </router-link> |
+        <span v-if="!user.loggedIn">
+          <router-link to="/register"> Register </router-link> |
         <router-link to="/login"> Login </router-link>
      </span>
-     <span v-else>
-          <router-link to="/feed"> Feed </router-link> |
-      <span @click="signOut" class="font-bold cursor-pointer">Logout</span>
-      </span>
+        <span v-else>
+      <router-link to="/feed"> Feed </router-link> |
+         <span @click="Logout" class="font-bold cursor-pointer">Logout</span>
+        </span>
    </div>
-   
 </div>
- <router-view />
+<router-view />
 </template>
-<script>
-import { getAuth, signOut } from "firebase/auth";
-import { mapGetters } from "vuex";
 
-export default {
-  data(){
-    return{
-   
-    }
-  },
-  computed: {
-    // map `this.user` to `this.$store.getters.user`
-    ...mapGetters({
-      user: "user"
-    })
-  },
- created(){
-   
- },
-  methods: {
-    signOut(){
-      const auth = getAuth();
-      signOut(auth).then(() => {
-        console.log(auth)
-        this.$router.push("/");
-        // Sign-out successful.
-      }).catch((error) => {
-        console.log(error);
-    // An error happened.
-      });
-    }
-   
-  }
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router"
+import { useStore } from "vuex"
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth"
+
+const Router = useRouter();
+const loggedIn = ref(true);
+const store = useStore();
+
+const  user = store.getters.user;
+const Logout = () => {
+  const auth = getAuth();
+  auth.signOut()
+  Router.push('/')
 }
+
 </script>
+
 <style>
 
 #app {
