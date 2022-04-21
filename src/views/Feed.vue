@@ -1,5 +1,5 @@
 <template>
-<div class="shadow-lg w-1/2 mx-auto font-bold mb-12 py-10">
+<div class="shadow-lg lg:w-1/2 w-full mx-auto font-bold mb-12 py-10">
 <h1 class="text-xl text-emerald-500">User Successfully Loged In</h1>
 <h1 class="text-2xl my-2 text-red-500 bg-white p-2">Welcome To My Todo APP </h1>
 <h1 class="text-blue-500 normal-case">USER : {{ user.data.email }}</h1>
@@ -7,12 +7,12 @@
 </div>
 <div>
    
-    <div class="flex w-1/2 mx-auto">
+    <div class="flex lg:flex-nowrap flex-wrap justify-center lg:w-1/2 w-full mx-auto">
         <input type="text" id="text" class="bg-white rounded-md border border-gray-200 px-4 py-2 placeholder:text-slate-400 focus:outline-none w-full focus:ring-1 focus:ring-red-200" placeholder="Enter Your Task" v-model="enterTask" >
-        <button class="bg-red-400 hover:bg-red-600 text-white px-4 py-2 font-bold rounded-lg ml-2 focus:outline-none focus:ring-1 focus:ring-violet-300" :disabled="enterTask == ''" :class="enterTask == '' ? 'cursor-not-allowed' : 'cursor-pointer' " @click="submitTask">SUBMIT</button>
+        <button class="bg-red-400 hover:bg-red-600 text-white px-4 py-2 font-bold rounded-lg ml-2 focus:outline-none focus:ring-1 focus:ring-violet-300 mt-2 lg:mt-0" :disabled="enterTask == ''" :class="enterTask == '' ? 'cursor-not-allowed' : 'cursor-pointer' " @click="submitTask">SUBMIT</button>
     </div>
     <div class="mt-8">
-    <table class="border-collapse border border-slate-400 w-1/2 mx-auto text-black text-left">
+    <table class="border-collapse border border-slate-400 lg:w-1/2 w-full mx-auto text-black text-left">
         <thead class="text-center">
         <tr>
             <th>SR NO.</th>
@@ -26,7 +26,7 @@
             <tr v-for="(task, taskIndex) in tasksList" :key="taskIndex" class="text-center">
                 <td class="border border-slate-300 px-2 py-2 ">{{ taskIndex + 1 }}</td>
   
-                <td class="border border-slate-300 px-2 py-2 text-left cursor-pointer capitalize font-semibold" @click="taskStatus(task)" :class="task.done ? 'text-green-600' : 'text-red-500'">{{ task.content }}</td>
+                <td class="border border-slate-300 px-2 py-2 text-left cursor-pointer capitalize font-semibold break-all" @click="taskStatus(task)" :class="task.done ? 'text-green-600 line-through' : 'text-red-500' ">{{ task.content }}</td>
                     <td class="border border-slate-300 px-2 py-2">
                     <input type="checkbox" v-model="task.done" class="ml-2 border border-slate-300 cursor-pointer">
                 </td>
