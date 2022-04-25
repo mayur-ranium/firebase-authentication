@@ -1,6 +1,7 @@
 <template>
 <div id="nav"> 
   <div>
+    
       <router-link to="/"> Home </router-link> |
         <span v-if="!user.loggedIn">
           <router-link to="/register"> Register </router-link> |
@@ -15,22 +16,30 @@
 <router-view />
 </template>
 
-<script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router"
-import { useStore } from "vuex"
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth"
+<script >
+  import { ref } from "vue";
+  import { useRouter } from "vue-router"
+  import { useStore } from "vuex"
+  import { getAuth, signOut, onAuthStateChanged } from "firebase/auth"
+  export default({
+    setup() {
+      const Router = useRouter();
+      const loggedIn = ref(true);
+      const store = useStore();
+      
+      const  user = store.getters.user;
+      const Logout = () => {
+        const auth = getAuth();
+        auth.signOut()
+        Router.push('/')
+      }
+      
+      return { Logout, user, loggedIn}
+      
+    }
+  })
 
-const Router = useRouter();
-const loggedIn = ref(true);
-const store = useStore();
-
-const  user = store.getters.user;
-const Logout = () => {
-  const auth = getAuth();
-  auth.signOut()
-  Router.push('/')
-}
+  
 
 </script>
 
